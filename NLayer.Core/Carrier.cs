@@ -11,7 +11,6 @@ namespace NLayer.Core
         public string CarrierName { get; set; }
         public bool CarrierIsActive { get; set; }
         public int CarrierPlusDesiCost { get; set; }
-        public int CarrierConfigurationId { get; set; }
         public ICollection<Order> Orders { get; set; }//navigaetion property
         public ICollection<CarrierConfiguration> CarrierConfigurations { get; set; }//navigation property
 

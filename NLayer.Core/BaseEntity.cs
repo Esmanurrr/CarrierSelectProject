@@ -9,6 +9,6 @@ namespace NLayer.Core
 {
     public abstract class BaseEntity
     {
-        public int CarrierId { get; set; }
+        public int Id { get; set; }
     }
 }
