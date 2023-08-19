@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NLayer.Core;
+using NLayer.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +17,7 @@ namespace NLayer.Repository.Configurations
             builder.Property(x => x.CarrierIsActive).IsRequired();
             builder.Property(x => x.CarrierPlusDesiCost).IsRequired();
             
-        
+
         }
     }
 }

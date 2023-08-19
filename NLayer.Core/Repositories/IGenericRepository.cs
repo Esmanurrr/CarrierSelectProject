@@ -9,7 +9,7 @@ namespace NLayer.Core.Repositories
 {
     public interface IGenericRepository<T> where T : class
     {
-        IQueryable<T> GetAll(Expression<Func<T, bool>> expression);
+        IQueryable<T> GetAll();
         // productRepository.where(x=>x.Id>5).orderby.tolistasync()
         IQueryable<T> GetWhere(Expression<Func<T, bool>> expression);
         Task AddAsync(T entity);
