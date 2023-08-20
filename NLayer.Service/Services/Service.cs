@@ -16,10 +16,10 @@ namespace NLayer.Service.Services
         private readonly IGenericRepository<T> _repository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public Service(IGenericRepository<T> _repository, IUnitOfWork _unitOfWork)
+        public Service(IGenericRepository<T> repository, IUnitOfWork unitOfWork)
         {
-            _repository = _repository;
-            _unitOfWork = _unitOfWork;
+            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<T> AddAsync(T entity)
@@ -50,6 +50,12 @@ namespace NLayer.Service.Services
         public IQueryable<T> GetWhere(Expression<Func<T, bool>> expression)
         {
             return _repository.GetWhere(expression);
+        }
+
+        public Task<T> GetByIdAsync(int id)
+        {
+            return _repository.GetByIdAsync(id);
+
         }
     }
 }

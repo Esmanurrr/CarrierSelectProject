@@ -12,6 +12,7 @@ namespace NLayer.Core.Repositories
         IQueryable<T> GetAll();
         // productRepository.where(x=>x.Id>5).orderby.tolistasync()
         IQueryable<T> GetWhere(Expression<Func<T, bool>> expression);
+        Task<T> GetByIdAsync(int id);
         Task AddAsync(T entity);
         void Update(T entity);
         void Remove(T entity);

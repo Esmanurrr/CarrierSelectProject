@@ -10,9 +10,9 @@ namespace NLayer.Repository.UnitOfWorks
     public class UnitOfWork : IUnitOfWork
     {
         private readonly AppDbContext _dbContext;
-        public UnitOfWork(AppDbContext _dbContext)
+        public UnitOfWork(AppDbContext dbContext)
         {
-            _dbContext = _dbContext;
+            _dbContext = dbContext;
         }
         public void Commit()
         {

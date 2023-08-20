@@ -12,6 +12,7 @@ namespace NLayer.Core.Services
         Task<IEnumerable<T>> GetAllAsync();
         IQueryable<T> GetWhere(Expression<Func<T, bool>> expression);
         Task<T> AddAsync(T entity);
+        Task<T> GetByIdAsync(int id);
         Task UpdateAsync(T entity);
         Task RemoveAsync(T entity);
     }

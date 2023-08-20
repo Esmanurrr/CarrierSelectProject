@@ -13,10 +13,10 @@ namespace NLayer.Repository.Repositories
     {
         protected readonly AppDbContext _context;
         private readonly DbSet<T> _dbSet;
-        public GenericRepository(AppDbContext _context)
+        public GenericRepository(AppDbContext context)
         {
-            _context = _context;
-            _dbSet = _context.Set<T>();
+            _context = context;
+            _dbSet = context.Set<T>();
         }
 
         public async Task AddAsync(T entity)
@@ -27,6 +27,11 @@ namespace NLayer.Repository.Repositories
         public IQueryable<T> GetAll()
         {
             return  _dbSet.AsNoTracking().AsQueryable();
+        }
+
+        public async Task<T> GetByIdAsync(int id)
+        {
+            return await _dbSet.FindAsync(id);
         }
 
         public IQueryable<T> GetWhere(Expression<Func<T, bool>> expression)
