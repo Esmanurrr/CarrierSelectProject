@@ -7,8 +7,7 @@ using NLayer.Core.Services;
 
 namespace NLayer.API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    
     public class CarriersController : CustomBaseController
     {
         private readonly IMapper _mapper;
@@ -26,6 +25,7 @@ namespace NLayer.API.Controllers
             var carrier = await _service.GetAllAsync();
             var carriersDto = _mapper.Map<List<CarrierDto>>(carrier.ToList());
             return CreateActionResult(CustomResponseDto<List<CarrierDto>>.Success(200, carriersDto));
+
         }
 
         [HttpPost]
@@ -33,7 +33,7 @@ namespace NLayer.API.Controllers
         {
             var carrier = await _service.AddAsync(_mapper.Map<Carrier>(carrierDto));
             var carriersDto = _mapper.Map<CarrierDto>(carrier);
-            return CreateActionResult(CustomResponseDto<CarrierDto>.Success(201));// 201 - created
+            return CreateActionResult(CustomResponseDto<CarrierDto>.Success(201));
 
         }
 

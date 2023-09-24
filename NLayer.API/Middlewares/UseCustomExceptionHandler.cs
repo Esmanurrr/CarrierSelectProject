@@ -7,7 +7,7 @@ namespace NLayer.API.Middlewares
 {
     public static class UseCustomExceptionHandler
     {
-        public static void UseCustomExceptiom (this IApplicationBuilder app)
+        public static void UseCustomException (this IApplicationBuilder app)
         {
             app.UseExceptionHandler(config =>
             {
@@ -15,19 +15,19 @@ namespace NLayer.API.Middlewares
                 {
                     context.Response.ContentType = "application/json";
 
-                    var exceptionFeature = context.Features.Get<IExceptionHandlerFeature>();//bana hatayı verecek interface'i implemente ettik
+                    var exceptionFeature = context.Features.Get<IExceptionHandlerFeature>();
                     //bundan da exceptiona gidicem
 
                     var statusCode = exceptionFeature.Error switch
                     {
                         ClientSideException => 400,
-                        _ => 500
+                        //_ => 500
                     };
 
                     context.Response.StatusCode = statusCode;
 
                     var response = CustomResponseDto<NoContentDto>.Fail(statusCode, exceptionFeature.Error.Message );
-                    // bu bir tip olduğu için json a serialize etmem lazım
+                    
 
                     await context.Response.WriteAsync(JsonSerializer.Serialize(response));
                 });

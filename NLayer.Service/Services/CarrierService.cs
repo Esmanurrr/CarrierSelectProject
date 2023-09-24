@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace NLayer.Service.Services
 {
-    public class CarrierService : Service<Carrier>, IService<Carrier>
+    public class CarrierService : Service<Carrier>, ICarrierService
     {
         public CarrierService(IGenericRepository<Carrier> repository, IUnitOfWork unitOfWork) : base(repository, unitOfWork)
         {
