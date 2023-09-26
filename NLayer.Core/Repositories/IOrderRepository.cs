@@ -9,6 +9,6 @@ namespace NLayer.Core.Repositories
 {
     public interface IOrderRepository :IGenericRepository<Order>
     {
-        
+        Task<Order> CreateOrder(Order order);
     }
 }
