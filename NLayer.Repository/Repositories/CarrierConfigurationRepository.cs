@@ -15,7 +15,7 @@ namespace NLayer.Repository.Repositories
         {
         }
 
-        public async Task<List<CarrierConfiguration>> GetCarrierAvailableDesi()
+        public async Task<List<CarrierConfiguration>> GetCarrierConfigWithCarrier()
         {
             return await _context.CarrierConfigurations.Include(x => x.Carrier).ToListAsync();
         }

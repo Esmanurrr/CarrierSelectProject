@@ -10,6 +10,6 @@ namespace NLayer.Core.Services
 {
     public interface IOrderService : IService<Order>
     {
-        Task<CustomResponseDto<Order>> CreateOrderAsync(Order order);
+        Task<CustomResponseDto<OrderDto>> CreateOrderAsync(Order order);
     }
 }

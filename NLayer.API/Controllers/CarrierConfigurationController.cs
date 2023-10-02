@@ -21,12 +21,6 @@ namespace NLayer.API.Controllers
             _service = service;
         }
 
-        [HttpGet("[action]/{desi}")]
-        public async Task<IActionResult> GetCarrierAvailableDesi(int desi)
-        {
-            return CreateActionResult(await _service.GetCarrierAvailableDesi(desi));
-        }
-
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -59,6 +53,14 @@ namespace NLayer.API.Controllers
             await _service.RemoveAsync(carrierConfig);
             return CreateActionResult(CustomResponseDto<NoContentDto>.Success(204));
 
+        }
+
+        [HttpGet("[action]/{desi}")]
+        public async Task<IActionResult> GetAvailableCarrier(int desi)
+        {
+            await _service.GetAvailableCarrier(desi);
+
+            return CreateActionResult(CustomResponseDto<CarrierConfiguration>.Success(204));
         }
     }
 }

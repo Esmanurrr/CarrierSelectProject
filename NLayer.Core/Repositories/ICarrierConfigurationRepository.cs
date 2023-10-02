@@ -9,7 +9,9 @@ namespace NLayer.Core.Repositories
 {
     public interface ICarrierConfigurationRepository :IGenericRepository<CarrierConfiguration>
     {
-        Task<List<CarrierConfiguration>> GetCarrierAvailableDesi();
+        Task<List<CarrierConfiguration>> GetCarrierConfigWithCarrier();
+
+        
 
     }
 }
