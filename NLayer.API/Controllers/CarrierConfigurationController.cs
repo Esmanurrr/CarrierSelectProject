@@ -33,8 +33,8 @@ namespace NLayer.API.Controllers
         public async Task<IActionResult> Add(CarrierConfigurationDto carrierConfigDto)
         {
             var carrierConfig = await _service.AddAsync(_mapper.Map<CarrierConfiguration>(carrierConfigDto));
-            var carriersConfigDto = _mapper.Map<CarrierDto>(carrierConfig);
-            return CreateActionResult(CustomResponseDto<CarrierDto>.Success(201));// 201 - created
+            var carriersConfigDto = _mapper.Map<CarrierConfigurationDto>(carrierConfig);
+            return CreateActionResult(CustomResponseDto<CarrierConfigurationDto>.Success(201));// 201 - created
 
         }
 
@@ -53,14 +53,6 @@ namespace NLayer.API.Controllers
             await _service.RemoveAsync(carrierConfig);
             return CreateActionResult(CustomResponseDto<NoContentDto>.Success(204));
 
-        }
-
-        [HttpGet("[action]/{desi}")]
-        public async Task<IActionResult> GetAvailableCarrier(int desi)
-        {
-            await _service.GetAvailableCarrier(desi);
-
-            return CreateActionResult(CustomResponseDto<CarrierConfiguration>.Success(204));
         }
     }
 }

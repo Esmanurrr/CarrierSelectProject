@@ -7,7 +7,6 @@ using NLayer.Core.Services;
 
 namespace NLayer.API.Controllers
 {
-    
     public class OrdersController : CustomBaseController
     {
 
@@ -29,13 +28,12 @@ namespace NLayer.API.Controllers
 
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Add(OrderDto orderDto)
+        [HttpPost("{orderDesi}")]
+        public async Task<IActionResult> Create(int orderDesi)
         {
-            var order = await _service.CreateOrderAsync(_mapper.Map<Order>(orderDto));
-            var ordersDto = _mapper.Map<OrderDto>(order);
-            return CreateActionResult(CustomResponseDto<OrderDto>.Success(201));
-
+            await _service.CreateOrderAsync(orderDesi);
+            
+            return CreateActionResult(CustomResponseDto<NoContentDto>.Success(204));
         }
     }
 }
