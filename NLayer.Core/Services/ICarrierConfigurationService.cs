@@ -10,6 +10,6 @@ namespace NLayer.Core.Services
 {
     public interface ICarrierConfigurationService : IService<CarrierConfiguration>
     {
-        public Task<List<CarrierConfiguration>> GetAvailableCarrier(int desi);
+
     }
 }

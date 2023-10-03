@@ -11,5 +11,6 @@ namespace NLayer.Core.DTOs
         public int CarrierMaxDesi { get; set; }
         public int CarrierMinDesi { get; set; }
         public decimal CarrierCost { get; set; }
+        public int CarrierId { get; set; }
     }
 }
