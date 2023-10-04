@@ -35,5 +35,14 @@ namespace NLayer.API.Controllers
             
             return CreateActionResult(CustomResponseDto<NoContentDto>.Success(204));
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var order = await _service.GetByIdAsync(id);
+            await _service.RemoveAsync(order);
+            return CreateActionResult(CustomResponseDto<NoContentDto>.Success(204));
+
+        }
     }
 }
