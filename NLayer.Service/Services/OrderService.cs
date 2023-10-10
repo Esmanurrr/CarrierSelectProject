@@ -21,13 +21,6 @@ namespace NLayer.Service.Services
         private readonly ICarrierConfigurationRepository _carrierConfigurationRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-
-        /* CarrierId
-         * CarrierName
-         * CarrierIsActive
-         * CarrierPlusDesiCost
-         * CarrierConfigurationId
-         */
         private readonly ICarrierConfigurationService _carrierConfigService;
 
         public OrderService(IGenericRepository<Order> repository, IUnitOfWork unitOfWork, IOrderRepository orderRepository, ICarrierRepository carrierRepository, ICarrierConfigurationRepository carrierConfigurationRepository, IMapper mapper) : base(repository, unitOfWork)
@@ -39,42 +32,32 @@ namespace NLayer.Service.Services
             _unitOfWork = unitOfWork;
         }
 
-        /* CarrierConfigurationId
-        * CarrierId
-        * CarrierMaxDesi
-        * CarrierMinDesi
-        * CarrierCost
-        */
-
-
-
-
         public async Task<CustomResponseDto<NoContentDto>> CreateOrderAsync(int orderDesi)
         {
-            var siparisDesi = orderDesi;
+            var desi = orderDesi;
 
             List<CarrierConfiguration> carrierConfigurations = await _carrierConfigurationRepository.GetAll().ToListAsync();
             List<Carrier> carriers = await _carrierRepository.GetAll().ToListAsync();
 
             bool foundMatchingConfiguration = false;
-            decimal minKargoUcreti = decimal.MaxValue;
+            decimal minCarrierCost = decimal.MaxValue;
             int selectedCarrierId = 0;
 
             foreach (Carrier carrier in carriers)
             {
                 if (carrier.CarrierIsActive)
                 {
-                    //Siparişin desi değerinin hangi kargo firmasının desi aralığına girdiğini bulma
+                    // Find the carrier which is available for order desi range
                     foreach (CarrierConfiguration configuration in carrierConfigurations)
                     {
-                        if (configuration.CarrierId == carrier.Id && siparisDesi >= configuration.CarrierMinDesi && siparisDesi <= configuration.CarrierMaxDesi)
+                        if (configuration.CarrierId == carrier.Id && desi >= configuration.CarrierMinDesi && desi <= configuration.CarrierMaxDesi)
                         {
                             foundMatchingConfiguration = true;
 
                             //Select the carrier with the lowest cost
-                            if (configuration.CarrierCost < minKargoUcreti)
+                            if (configuration.CarrierCost < minCarrierCost)
                             {
-                                minKargoUcreti = configuration.CarrierCost;
+                                minCarrierCost = configuration.CarrierCost;
                                 selectedCarrierId = configuration.CarrierId;
                             }
                         }
@@ -88,7 +71,7 @@ namespace NLayer.Service.Services
                 {
                     OrderDesi = orderDesi,
                     OrderDate = DateTime.Now,
-                    OrderCarrierCost = minKargoUcreti,
+                    OrderCarrierCost = minCarrierCost,
                     CarrierId = selectedCarrierId
                 });
 
@@ -97,17 +80,17 @@ namespace NLayer.Service.Services
                 return CustomResponseDto<NoContentDto>.Success(204); 
             }
 
-            decimal kargoUcreti = 0;
+            decimal carrierCost = 0;
             int plusDesiCost = 0;
             int carrierId = 0;
 
-            decimal enYakinDesiFarki = decimal.MaxValue; // En yakın desi farkını takip etmek için bir başlangıç değeri atama
+            decimal enYakinDesiFarki = decimal.MaxValue;
 
-            // Siparişin desi değerinin hiçbir kargo firmasının desi aralığına girmemesi durumu
+            // the situation of no available carrier for desi range
             foreach (CarrierConfiguration configuration in carrierConfigurations)
             {
-                // Siparişin desi değeri ile kargo yapılandırmasının en yakın desi değeri arasındaki farkı hesaplama
-                decimal desiFarki = Math.Abs(siparisDesi - configuration.CarrierMaxDesi);
+                // closest desi value for carriers desi range
+                decimal desiFarki = Math.Abs(desi - configuration.CarrierMaxDesi);
 
                 if (desiFarki < enYakinDesiFarki)
                 {
@@ -122,8 +105,8 @@ namespace NLayer.Service.Services
                         }
                     }
 
-                    // Kargo ücretini hesaplama
-                    kargoUcreti = configuration.CarrierCost + (plusDesiCost * enYakinDesiFarki);
+                    // Calculate carrierCost
+                    carrierCost = configuration.CarrierCost + (plusDesiCost * enYakinDesiFarki);
                 }
             }
 
@@ -131,7 +114,7 @@ namespace NLayer.Service.Services
             {
                 OrderDesi = orderDesi,
                 OrderDate = DateTime.Now,
-                OrderCarrierCost = kargoUcreti,
+                OrderCarrierCost = carrierCost,
                 CarrierId = carrierId
             });
 

@@ -27,7 +27,6 @@ namespace NLayer.Service.Services
             await _repository.AddAsync(entity);
             await _unitOfWork.CommitAsync();
             return entity;
-
         }
 
         public async Task<IEnumerable<T>> GetAllAsync()

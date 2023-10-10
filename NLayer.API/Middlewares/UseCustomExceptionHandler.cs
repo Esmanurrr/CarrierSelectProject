@@ -15,13 +15,13 @@ namespace NLayer.API.Middlewares
                 {
                     context.Response.ContentType = "application/json";
 
+                    //to go exception
                     var exceptionFeature = context.Features.Get<IExceptionHandlerFeature>();
-                    //bundan da exceptiona gidicem
 
                     var statusCode = exceptionFeature.Error switch
                     {
                         ClientSideException => 400,
-                        //_ => 500
+                        _ => 500
                     };
 
                     context.Response.StatusCode = statusCode;

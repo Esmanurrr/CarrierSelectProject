@@ -11,8 +11,6 @@ namespace NLayer.Repository.Repositories
 {
     public class OrderRepository : GenericRepository<Order>, IOrderRepository
     {
-
-
         public OrderRepository(AppDbContext context) : base(context)
         {
         }
