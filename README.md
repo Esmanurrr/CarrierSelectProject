@@ -1,6 +1,6 @@
-# ECommerceAPI
+# Carrier Select
   
-ECommerceAPI is a .NET API project that automatically selects a shipping carrier based on the weight (desi) information entered by the customer during the order placement process.
+Carrier Select project is a .NET API project that automatically selects a shipping carrier based on the weight (desi) information entered by the customer during the order placement process.
 
 When a customer creates an order, the API calculates the shipping cost based on the weight of the order using the predefined data associated with the shipping carriers.
 The calculated shipping cost and relevant data are then stored in the order table.
